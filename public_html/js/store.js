@@ -102,10 +102,19 @@
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, todos);
 		} else {
+                    
+                    // Check that two identical id do not create
+                    
+                    for (var i = 0; i < todos.length; i++) {
+                        
+                        if(todos[i].id == newId)
+                        {
+                            newId = charset.charAt(Math.floor(Math.random() * charset.length));
+                        }
+                    }
 
     		// Assign an ID
 			updateData.id = parseInt(newId);
-    
 
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);

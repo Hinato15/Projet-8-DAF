@@ -84,7 +84,7 @@
 	    var newId = ""; 
 	    var charset = "0123456789";
 
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < 1; i++) {
      		newId += charset.charAt(Math.floor(Math.random() * charset.length));
 		}
 
@@ -107,9 +107,9 @@
                     
                     for (var i = 0; i < todos.length; i++) {
                         
-                        if(todos[i].id == newId)
+                        while (todos[i].id == newId)
                         {
-                            newId = charset.charAt(Math.floor(Math.random() * charset.length));
+                            newId += charset.charAt(Math.floor(Math.random() * charset.length));
                         }
                     }
 

@@ -82,36 +82,50 @@
 
         // If an ID was actually given, find the item and update each property
         // Generate an ID
-	    var newId = ""; 
-	    var charset = "0123456789";
+        var newId = "";
 
-        for (var i = 0; i < 6; i++) {
-     		newId += charset.charAt(Math.floor(Math.random() * charset.length));
-		}
 
-		// If an ID was actually given, find the item and update each property
-		if (id) {
-			for (var i = 0; i < todos.length; i++) {
-				if (todos[i].id === id) {
-					for (var key in updateData) {
-						todos[i][key] = updateData[key];
-					}
-					break;
-				}
-			}
+        // If an ID was actually given, find the item and update each property
+        if (id) {
+            for (var i = 0; i < todos.length; i++) {
+                if (todos[i].id === id) {
+                    for (var key in updateData) {
+                        todos[i][key] = updateData[key];
+                    }
+                    break;
+                }
+            }
 
-			localStorage[this._dbName] = JSON.stringify(data);
-			callback.call(this, todos);
-		} else {
+            localStorage[this._dbName] = JSON.stringify(data);
+            callback.call(this, todos);
+        } else {
 
-    		// Assign an ID
-			updateData.id = parseInt(newId);
-    
+            var charset = "0123456789";
 
-			todos.push(updateData);
-			localStorage[this._dbName] = JSON.stringify(data);
-			callback.call(this, [updateData]);
-		}
+            for (var i = 0; i < 6; i++)
+            {
+                newId += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+
+            for (var i = 0; i < todos.length; i++)
+            {
+                while (todos[i].id == newId)
+                {
+                    for (var i = 0; i < 6; i++)
+                    {
+                        newId += charset.charAt(Math.floor(Math.random() * charset.length));
+                    }
+                }
+            }
+
+            // Assign an ID
+            updateData.id = parseInt(newId);
+
+
+            todos.push(updateData);
+            localStorage[this._dbName] = JSON.stringify(data);
+            callback.call(this, [updateData]);
+        }
     };
 
     /**
@@ -151,6 +165,7 @@
     };
 
     // Export to window
-    window.app = window.app || {};
+    window.app = window.app || {}
+    ;
     window.app.Store = Store;
 })(window);
